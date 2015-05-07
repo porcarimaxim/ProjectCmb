@@ -46,10 +46,10 @@ class UserRequest extends Request
 			case 'PATCH':
 			{
 				return [
-					'first_name' => 'required',
-					'last_name'  => 'required',
-					'email'      => 'required|email|unique:users,email,'.$user->id,
-					'password'   => 'required|confirmed',
+					'first_name' => 'sometimes|required',
+					'last_name'  => 'sometimes|required',
+					'email'      => 'sometimes|required|email|unique:users,email,'.$user->id,
+					'password'   => 'sometimes|required|confirmed',
 				];
 			}
 			default:break;
