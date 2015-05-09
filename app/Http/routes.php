@@ -20,7 +20,8 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
-
 Route::group(['prefix' => 'api/v1'], function(){
-	Route::resource('users', 'Api\UsersController', ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+	Route::resource('users', 'Api\v1\UsersController', ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+	Route::resource('companies', 'Api\v1\CompaniesController', ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+	Route::resource('calls', 'Api\v1\CallsController', ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 });

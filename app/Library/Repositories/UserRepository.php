@@ -1,7 +1,7 @@
-<?php namespace Cmb\Repositories;
+<?php namespace Library\Repositories;
 
 use App\Http\Requests\Request;
-use App\User;
+use App\Models\User;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -24,8 +24,13 @@ class UserRepository implements UserRepositoryInterface
 		return User::create($request->all());
 	}
 
-	public function update($id, Request $request)
+	public function update(Request $request, $id)
 	{
 		return User::updateOrCreate($request->all());
+	}
+
+	public function destroy($id)
+	{
+		return User::destroy($id);
 	}
 }

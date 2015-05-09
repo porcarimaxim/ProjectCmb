@@ -19,7 +19,7 @@
 		],
 		"psr-4": {
 			"App\\": "app/",
-		  	"Cmb\\": "Cmb/"
+		  	"Library\\": "app/Library/"
 		}
 	},
 	"autoload-dev": {

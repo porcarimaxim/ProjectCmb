@@ -149,7 +149,7 @@ return [
 		 * Custom providers
 		 */
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
-		'Cmb\Repositories\BackendServiceProvider'
+		'App\Providers\BackendServiceProvider'
 	],
 
 	/*

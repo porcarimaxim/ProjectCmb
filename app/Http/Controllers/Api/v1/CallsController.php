@@ -1,27 +1,27 @@
-<?php namespace App\Http\Controllers\Api;
+<?php namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Http\Requests\UserRequest;
-use Cmb\Repositories\UserRepositoryInterface;
+use App\Http\Requests\CallRequest;
+use Library\Repositories\CallRepositoryInterface;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class CallsController extends Controller
 {
 
 
 	/**
-	 * @var Cmb\Repositories\UserRepositoryInterface
+	 * @var CallRepositoryInterface
 	 */
-	protected $user;
+	protected $call;
 
 	/**
-	 * @param UserRepository $user
+	 * @param CallRepositoryInterface $call
 	 */
-	public function __construct(UserRepositoryInterface $user)
+	public function __construct(CallRepositoryInterface $call)
 	{
-		$this->user = $user;
+		$this->call = $call;
 	}
 
 	/**
@@ -31,18 +31,18 @@ class UsersController extends Controller
 	 */
 	public function index()
 	{
-		return $this->user->getAll();
+		return $this->call->getAll();
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @param UserRequest $request
+	 * @param CallRequest $request
 	 * @return Response
 	 */
-	public function store(UserRequest $request)
+	public function store(CallRequest $request)
 	{
-		return $this->user->store($request);
+		return $this->call->store($request);
 	}
 
 	/**
@@ -53,20 +53,19 @@ class UsersController extends Controller
 	 */
 	public function show($id)
 	{
-		return $this->user->find($id);
+		return $this->call->find($id);
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 *
 	 * @param  int $id
-	 * @param UserRequest $request
+	 * @param CallRequest $request
 	 * @return Response
 	 */
-	public function update(UserRequest $request, $id)
+	public function update(CallRequest $request, $id)
 	{
-		dd($request->all(), $id);
-		return $this->user->update($request, $id);
+		return $this->call->update($request, $id);
 	}
 
 	/**
@@ -77,7 +76,7 @@ class UsersController extends Controller
 	 */
 	public function destroy($id)
 	{
-		//
+		return $this->call->destroy($id);
 	}
 
 }

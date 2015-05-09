@@ -28,7 +28,7 @@
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
         "Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider",
-        "Cmb\\Repositories\\BackendServiceProvider"
+        "App\\Providers\\BackendServiceProvider"
     ],
     "eager": [
         "Illuminate\\Auth\\AuthServiceProvider",
@@ -47,7 +47,7 @@
         "App\\Providers\\ConfigServiceProvider",
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
-        "Cmb\\Repositories\\BackendServiceProvider"
+        "App\\Providers\\BackendServiceProvider"
     ],
     "deferred": {
         "command.app.name": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",
