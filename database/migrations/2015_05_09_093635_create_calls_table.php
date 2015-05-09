@@ -24,6 +24,7 @@ class CreateCallsTable extends Migration {
 			$table->string('description')->nullable();
 			$table->enum('status', ['active', 'done'])->nullable();
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
