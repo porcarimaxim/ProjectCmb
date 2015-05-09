@@ -1,6 +1,6 @@
 <?php namespace App\Http\Requests;
 
-use App\Models\User;
+use App\Library\Models\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Illuminate\Http\Response as IlluminateResponse;
 
@@ -48,7 +48,7 @@ class UserRequest extends Request
 				return [
 					'first_name' => 'sometimes|required',
 					'last_name'  => 'sometimes|required',
-					'email'      => 'sometimes|required|email|unique:users,email' . $user->id,
+					'email'      => 'sometimes|required|email|unique:users,email,' . $user->id,
 					'password'   => 'sometimes|required|confirmed',
 				];
 			}

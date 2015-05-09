@@ -8,18 +8,18 @@ class BackendServiceProvider extends ServiceProvider{
 	{
 
 		$this->app->bind(
-			'Library\Repositories\UserRepositoryInterface',
-			'Library\Repositories\UserRepository'
+			'App\Library\RepositoriesInterface\UserInterface',
+			'App\Library\Repositories\UserRepository'
 		);
 
 		$this->app->bind(
-			'Library\Repositories\CompanyRepositoryInterface',
-			'Library\Repositories\CompanyRepository'
+			'App\Library\RepositoriesInterface\CompanyInterface',
+			'App\Library\Repositories\CompanyRepository'
 		);
 
 		$this->app->bind(
-			'Library\Repositories\CallRepositoryInterface',
-			'Library\Repositories\CallRepository'
+			'App\Library\RepositoriesInterface\CallInterface',
+			'App\Library\Repositories\CallRepository'
 		);
 
 	}

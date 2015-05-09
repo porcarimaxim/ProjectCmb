@@ -1,11 +1,13 @@
-<?php namespace Library\Repositories;
+<?php namespace App\Library\Repositories;
 
 use App\Library\Models\Call;
+use App\Library\RepositoriesInterface\CallInterface;
 
-class CallRepository extends Repository implements CallRepositoryInterface
+class CallRepository extends Repository implements CallInterface
 {
-	public function __construct()
+
+	public function getModel()
 	{
-		$this->model = new Call;
+		return new Call;
 	}
 }

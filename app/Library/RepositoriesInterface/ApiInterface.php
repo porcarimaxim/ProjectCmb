@@ -1,8 +1,8 @@
-<?php namespace Library\Repositories;
+<?php namespace App\Library\RepositoriesInterface;
 
 use App\Http\Requests\Request;
 
-interface ApiRepositoryInterface
+interface ApiInterface
 {
 	public function getAll();
 

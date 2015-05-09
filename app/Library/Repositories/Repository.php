@@ -1,51 +1,44 @@
-<?php namespace Library\Repositories;
+<?php namespace App\Library\Repositories;
 
 use App\Http\Requests\Request;
-use Illuminate\Database\Eloquent\Model;
 
 abstract class Repository
 {
 	protected $model;
 
-	/**
-	 * @throws \Exception
-	 */
-	public function __construct()
-	{
-		parent::__construct();
 
-		if (!$this->model instanceof Model) {
-			throw new \Exception("Model is not valid");
-		}
-	}
+	/**
+	 * @return \Illuminate\Database\Eloquent\Model
+	 */
+	abstract function getModel();
 
 	public function getAll()
 	{
-		return $this->model->all();
+		return $this->getModel()->all();
 	}
 
 	public function find($id)
 	{
-		return $this->model->find($id);
+		return $this->getModel()->find($id);
 	}
 
 	public function store(Request $request)
 	{
-		return $this->model->create($request->all());
+		return $this->getModel()->create($request->all());
 	}
 
 	public function update(Request $request, $id)
 	{
-		return $this->model->updateOrCreate(['id' => $id], $request->all());
+		return $this->getModel()->updateOrCreate(['id' => $id], $request->all());
 	}
 
 	public function destroy($id)
 	{
-		return $this->model->destroy($id);
+		return $this->getModel()->destroy($id);
 	}
 
 	public function paginate()
 	{
-		return $this->model->paginate();
+		return $this->getModel()->paginate();
 	}
 }

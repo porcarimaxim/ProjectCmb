@@ -3,14 +3,14 @@
 use App\Http\Requests;
 
 use App\Http\Requests\CompanyRequest;
-use Library\Repositories\CompanyRepositoryInterface;
-use Library\Transformers\CompanyTransformer;
+use App\Library\RepositoriesInterface\CompanyInterface;
+use App\Library\Transformers\CompanyTransformer;
 use Sorskod\Larasponse\Larasponse;
 
 class CompaniesController extends ApiController {
 
 	/**
-	 * @var CompanyRepositoryInterface
+	 * @var CompanyInterface
 	 */
 	protected $company;
 
@@ -21,9 +21,9 @@ class CompaniesController extends ApiController {
 
 	/**
 	 * @param Larasponse $fractal
-	 * @param CompanyRepositoryInterface $company
+	 * @param CompanyInterface $company
 	 */
-	public function __construct(Larasponse $fractal, CompanyRepositoryInterface $company)
+	public function __construct(Larasponse $fractal, CompanyInterface $company)
 	{
 		$this->setResourceKey('companies');
 

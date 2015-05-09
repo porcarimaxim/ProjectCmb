@@ -3,14 +3,14 @@
 use App\Http\Requests;
 
 use App\Http\Requests\UserRequest;
-use Library\Repositories\UserRepositoryInterface;
-use Library\Transformers\UserTransformer;
+use App\Library\RepositoriesInterface\UserInterface;
+use App\Library\Transformers\UserTransformer;
 use Sorskod\Larasponse\Larasponse;
 
 class UsersController extends ApiController
 {
 	/**
-	 * @var UserRepositoryInterface
+	 * @var UserInterface
 	 */
 	protected $user;
 
@@ -21,9 +21,9 @@ class UsersController extends ApiController
 
 	/**
 	 * @param Larasponse $fractal
-	 * @param UserRepositoryInterface $user
+	 * @param UserInterface $user
 	 */
-	public function __construct(Larasponse $fractal, UserRepositoryInterface $user)
+	public function __construct(Larasponse $fractal, UserInterface $user)
 	{
 		$this->setResourceKey('users');
 

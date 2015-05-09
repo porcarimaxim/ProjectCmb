@@ -1,11 +1,12 @@
-<?php namespace Library\Repositories;
+<?php namespace App\Library\Repositories;
 
 use App\Library\Models\Company;
+use App\Library\RepositoriesInterface\CompanyInterface;
 
-class CompanyRepository extends Repository implements CompanyRepositoryInterface
+class CompanyRepository extends Repository implements CompanyInterface
 {
-	public function __construct()
+	public function getModel()
 	{
-		$this->model = new Company;
+		return new Company;
 	}
 }

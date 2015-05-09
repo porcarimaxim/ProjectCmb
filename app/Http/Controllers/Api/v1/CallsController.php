@@ -3,14 +3,14 @@
 use App\Http\Requests;
 
 use App\Http\Requests\CallRequest;
-use Library\Repositories\CallRepositoryInterface;
-use Library\Transformers\CallTransformer;
+use App\Library\RepositoriesInterface\CallInterface;
+use App\Library\Transformers\CallTransformer;
 use Sorskod\Larasponse\Larasponse;
 
 class CallsController extends ApiController
 {
 	/**
-	 * @var CallRepositoryInterface
+	 * @var CallInterface
 	 */
 	protected $call;
 
@@ -21,9 +21,9 @@ class CallsController extends ApiController
 
 	/**
 	 * @param Larasponse $fractal
-	 * @param CallRepositoryInterface $call
+	 * @param CallInterface $call
 	 */
-	public function __construct(Larasponse $fractal, CallRepositoryInterface $call)
+	public function __construct(Larasponse $fractal, CallInterface $call)
 	{
 		$this->setResourceKey('calls');
 
