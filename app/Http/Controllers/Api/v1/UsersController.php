@@ -17,19 +17,19 @@ class UsersController extends ApiController
 	/**
 	 * @var Larasponse
 	 */
-	protected $response;
+	protected $fractal;
 
 	/**
-	 * @param Larasponse $response
+	 * @param Larasponse $fractal
 	 * @param UserRepositoryInterface $user
 	 */
-	public function __construct(Larasponse $response, UserRepositoryInterface $user)
+	public function __construct(Larasponse $fractal, UserRepositoryInterface $user)
 	{
 		$this->setResourceKey('users');
 
 		$this->user = $user;
 
-		$this->response = $response;
+		$this->fractal = $fractal;
 	}
 
 	/**
@@ -40,7 +40,7 @@ class UsersController extends ApiController
 	public function index()
 	{
 		$users = $this->user->paginate();
-		return $this->response->paginatedCollection($users, new UserTransformer, $this->getResourceKey());
+		return $this->fractal->paginatedCollection($users, new UserTransformer, $this->getResourceKey());
 	}
 
 	/**
@@ -56,7 +56,7 @@ class UsersController extends ApiController
 			return $this->respondNotFound();
 		}
 
-		return $this->response->collection([$user], new UserTransformer, $this->getResourceKey());
+		return $this->fractal->collection([$user], new UserTransformer, $this->getResourceKey());
 	}
 
 	/**
@@ -68,7 +68,7 @@ class UsersController extends ApiController
 	public function store(UserRequest $request)
 	{
 		$user = $this->user->store($request);
-		return $this->response->collection([$user], new UserTransformer, $this->getResourceKey());
+		return $this->fractal->collection([$user], new UserTransformer, $this->getResourceKey());
 	}
 
 	/**
@@ -81,7 +81,7 @@ class UsersController extends ApiController
 	public function update(UserRequest $request, $id)
 	{
 		$user = $this->user->update($request, $id);
-		return $this->response->collection([$user], new UserTransformer, $this->getResourceKey());
+		return $this->fractal->collection([$user], new UserTransformer, $this->getResourceKey());
 	}
 
 	/**

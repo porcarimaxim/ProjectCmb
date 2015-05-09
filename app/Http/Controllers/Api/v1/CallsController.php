@@ -17,19 +17,19 @@ class CallsController extends ApiController
 	/**
 	 * @var Larasponse
 	 */
-	protected $response;
+	protected $fractal;
 
 	/**
-	 * @param Larasponse $response
+	 * @param Larasponse $fractal
 	 * @param CallRepositoryInterface $call
 	 */
-	public function __construct(Larasponse $response, CallRepositoryInterface $call)
+	public function __construct(Larasponse $fractal, CallRepositoryInterface $call)
 	{
 		$this->setResourceKey('calls');
 
 		$this->call = $call;
 
-		$this->response = $response;
+		$this->fractal = $fractal;
 	}
 
 	/**
@@ -40,7 +40,7 @@ class CallsController extends ApiController
 	public function index()
 	{
 		$calls = $this->call->paginate();
-		return $this->response->paginatedCollection($calls, new CallTransformer(), $this->getResourceKey());
+		return $this->fractal->paginatedCollection($calls, new CallTransformer(), $this->getResourceKey());
 	}
 
 	/**
@@ -56,7 +56,7 @@ class CallsController extends ApiController
 			return $this->respondNotFound();
 		}
 
-		return $this->response->collection([$call], new CallTransformer(), $this->getResourceKey());
+		return $this->fractal->collection([$call], new CallTransformer(), $this->getResourceKey());
 	}
 
 	/**
@@ -68,7 +68,7 @@ class CallsController extends ApiController
 	public function store(CallRequest $request)
 	{
 		$call = $this->call->store($request);
-		return $this->response->collection([$call], new CallTransformer(), $this->getResourceKey());
+		return $this->fractal->collection([$call], new CallTransformer(), $this->getResourceKey());
 	}
 
 	/**
@@ -81,7 +81,7 @@ class CallsController extends ApiController
 	public function update(CallRequest $request, $id)
 	{
 		$call = $this->call->update($request, $id);
-		return $this->response->collection([$call], new CallTransformer(), $this->getResourceKey());
+		return $this->fractal->collection([$call], new CallTransformer(), $this->getResourceKey());
 	}
 
 	/**

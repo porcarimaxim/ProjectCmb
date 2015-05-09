@@ -17,19 +17,19 @@ class CompaniesController extends ApiController {
 	/**
 	 * @var Larasponse
 	 */
-	protected $response;
+	protected $fractal;
 
 	/**
-	 * @param Larasponse $response
+	 * @param Larasponse $fractal
 	 * @param CompanyRepositoryInterface $company
 	 */
-	public function __construct(Larasponse $response, CompanyRepositoryInterface $company)
+	public function __construct(Larasponse $fractal, CompanyRepositoryInterface $company)
 	{
 		$this->setResourceKey('companies');
 
 		$this->company = $company;
 
-		$this->response = $response;
+		$this->fractal = $fractal;
 	}
 
 	/**
@@ -40,7 +40,7 @@ class CompaniesController extends ApiController {
 	public function index()
 	{
 		$companies = $this->company->paginate();
-		return $this->response->paginatedCollection($companies, new CompanyTransformer(), $this->getResourceKey());
+		return $this->fractal->paginatedCollection($companies, new CompanyTransformer(), $this->getResourceKey());
 	}
 
 	/**
@@ -56,7 +56,7 @@ class CompaniesController extends ApiController {
 			return $this->respondNotFound();
 		}
 
-		return $this->response->collection([$company], new CompanyTransformer(), $this->getResourceKey());
+		return $this->fractal->collection([$company], new CompanyTransformer(), $this->getResourceKey());
 	}
 
 	/**
@@ -68,7 +68,7 @@ class CompaniesController extends ApiController {
 	public function store(CompanyRequest $request)
 	{
 		$company = $this->company->store($request);
-		return $this->response->collection([$company], new CompanyTransformer(), $this->getResourceKey());
+		return $this->fractal->collection([$company], new CompanyTransformer(), $this->getResourceKey());
 	}
 
 	/**
@@ -81,7 +81,7 @@ class CompaniesController extends ApiController {
 	public function update(CompanyRequest $request, $id)
 	{
 		$company = $this->company->update($request, $id);
-		return $this->response->collection([$company], new CompanyTransformer(), $this->getResourceKey());
+		return $this->fractal->collection([$company], new CompanyTransformer(), $this->getResourceKey());
 	}
 
 	/**
