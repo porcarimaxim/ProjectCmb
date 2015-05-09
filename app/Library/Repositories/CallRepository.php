@@ -1,36 +1,11 @@
 <?php namespace Library\Repositories;
 
-use App\Http\Requests\Request;
-use App\Models\Call;
+use App\Library\Models\Call;
 
-class CallRepository implements CallRepositoryInterface
+class CallRepository extends Repository implements CallRepositoryInterface
 {
-
-	/**
-	 * @return mixed
-	 */
-	public function getAll()
+	public function __construct()
 	{
-		return Call::all();
-	}
-
-	public function find($id)
-	{
-		return Call::findOrFail($id);
-	}
-
-	public function store(Request $request)
-	{
-		return Call::create($request->all());
-	}
-
-	public function update(Request $request, $id)
-	{
-		return Call::updateOrCreate($request->all());
-	}
-
-	public function destroy($id)
-	{
-		return Call::destroy($id);
+		$this->model = new Call;
 	}
 }

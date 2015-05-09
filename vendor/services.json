@@ -27,6 +27,7 @@
         "App\\Providers\\ConfigServiceProvider",
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
+        "Sorskod\\Larasponse\\LarasponseServiceProvider",
         "Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider",
         "App\\Providers\\BackendServiceProvider"
     ],
@@ -47,6 +48,7 @@
         "App\\Providers\\ConfigServiceProvider",
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
+        "Sorskod\\Larasponse\\LarasponseServiceProvider",
         "App\\Providers\\BackendServiceProvider"
     ],
     "deferred": {

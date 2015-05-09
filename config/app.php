@@ -148,8 +148,9 @@ return [
 		/*
 		 * Custom providers
 		 */
+		'Sorskod\Larasponse\LarasponseServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
-		'App\Providers\BackendServiceProvider'
+		'App\Providers\BackendServiceProvider',
 	],
 
 	/*
@@ -197,7 +198,9 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
-
+		/*
+		 * Custom aliases
+		 */
 	],
 
 ];

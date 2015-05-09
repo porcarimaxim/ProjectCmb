@@ -2,8 +2,8 @@
 
 use App\Http\Requests\Request;
 
-interface ApiRepositoryInterface {
-
+interface ApiRepositoryInterface
+{
 	public function getAll();
 
 	public function find($id);
@@ -14,4 +14,5 @@ interface ApiRepositoryInterface {
 
 	public function destroy($id);
 
+	public function paginate();
 }

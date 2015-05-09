@@ -1,13 +1,13 @@
 <?php namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 use App\Http\Requests\CompanyRequest;
 use Library\Repositories\CompanyRepositoryInterface;
-use Illuminate\Http\Request;
+use Library\Transformers\CompanyTransformer;
+use Sorskod\Larasponse\Larasponse;
 
-class CompaniesController extends Controller {
+class CompaniesController extends ApiController {
 
 	/**
 	 * @var CompanyRepositoryInterface
@@ -15,43 +15,64 @@ class CompaniesController extends Controller {
 	protected $company;
 
 	/**
+	 * @var Larasponse
+	 */
+	protected $response;
+
+	/**
+	 * @var string
+	 */
+	protected $resourceKey;
+
+	/**
+	 * @param Larasponse $response
 	 * @param CompanyRepositoryInterface $company
 	 */
-	public function __construct(CompanyRepositoryInterface $company)
+	public function __construct(Larasponse $response, CompanyRepositoryInterface $company)
 	{
 		$this->company = $company;
+
+		$this->response = $response;
+
+		// TODO put in extended class
+		$this->resourceKey = 'companies';
 	}
 
 	/**
 	 * Display a listing of the resource.
 	 *
-	 * @return Response
+	 * @return mixed
 	 */
 	public function index()
 	{
-		return $this->company->getAll();
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param CompanyRequest $request
-	 * @return Response
-	 */
-	public function store(CompanyRequest $request)
-	{
-		return $this->company->store($request);
+		return $this->response->paginatedCollection($this->company->paginate(), new CompanyTransformer(), $this->resourceKey);
 	}
 
 	/**
 	 * Display the specified resource.
 	 *
 	 * @param  int $id
-	 * @return Response
+	 * @return mixed
 	 */
 	public function show($id)
 	{
-		return $this->company->find($id);
+		$company = $this->company->find($id);
+		if (!$company) {
+			return $this->respondNotFound();
+		}
+
+		return $this->response->collection([$company], new CompanyTransformer(), $this->resourceKey);
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param CompanyRequest $request
+	 * @return mixed
+	 */
+	public function store(CompanyRequest $request)
+	{
+		return $this->response->collection([$this->company->store($request)], new CompanyTransformer(), $this->resourceKey);
 	}
 
 	/**
@@ -59,21 +80,22 @@ class CompaniesController extends Controller {
 	 *
 	 * @param  int $id
 	 * @param CompanyRequest $request
-	 * @return Response
+	 * @return mixed
 	 */
 	public function update(CompanyRequest $request, $id)
 	{
-		return $this->company->update($request, $id);
+		return $this->response->collection([$this->company->update($request, $id)], new CompanyTransformer(), $this->resourceKey);
 	}
 
 	/**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int $id
-	 * @return Response
+	 * @return mixed
 	 */
 	public function destroy($id)
 	{
+		// TODO implement destroy response
 		return $this->company->destroy($id);
 	}
 

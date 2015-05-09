@@ -1,8 +1,8 @@
 <?php namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Illuminate\Http\Response as IlluminateResponse;
 
 class UserRequest extends Request
 {
@@ -38,7 +38,7 @@ class UserRequest extends Request
 				return [
 					'first_name' => 'required',
 					'last_name'  => 'required',
-					'email'      => 'required|email|unique:users',
+					'email'      => 'required|email|unique:users,email',
 					'password'   => 'required|confirmed',
 				];
 			}
@@ -48,7 +48,7 @@ class UserRequest extends Request
 				return [
 					'first_name' => 'sometimes|required',
 					'last_name'  => 'sometimes|required',
-					'email'      => 'sometimes|required|email|unique:email,'.$user->id,
+					'email'      => 'sometimes|required|email|unique:users,email' . $user->id,
 					'password'   => 'sometimes|required|confirmed',
 				];
 			}
@@ -56,9 +56,10 @@ class UserRequest extends Request
 		}
 	}
 
+	//TODO de stilizat dupa modelul responsului
 	public function response(array $errors)
 	{
-		return new JsonResponse($errors, 422);
+		return new JsonResponse($errors, IlluminateResponse::HTTP_UNPROCESSABLE_ENTITY);
 	}
 
 

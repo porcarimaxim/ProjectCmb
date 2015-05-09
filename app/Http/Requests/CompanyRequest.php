@@ -1,8 +1,7 @@
 <?php namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-use App\Models\Company;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Illuminate\Http\Response as IlluminateResponse;
 
 class CompanyRequest extends Request
 {
@@ -48,9 +47,10 @@ class CompanyRequest extends Request
 		}
 	}
 
+	//TODO de stilizat dupa modelul responsului
 	public function response(array $errors)
 	{
-		return new JsonResponse($errors, 422);
+		return new JsonResponse($errors, IlluminateResponse::HTTP_UNPROCESSABLE_ENTITY);
 	}
 
 

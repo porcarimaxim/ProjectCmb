@@ -1,36 +1,11 @@
 <?php namespace Library\Repositories;
 
-use App\Http\Requests\Request;
-use App\Models\User;
+use App\Library\Models\User;
 
-class UserRepository implements UserRepositoryInterface
+class UserRepository extends Repository implements UserRepositoryInterface
 {
-
-	/**
-	 * @return mixed
-	 */
-	public function getAll()
+	public function __construct()
 	{
-		return User::all();
-	}
-
-	public function find($id)
-	{
-		return User::findOrFail($id);
-	}
-
-	public function store(Request $request)
-	{
-		return User::create($request->all());
-	}
-
-	public function update(Request $request, $id)
-	{
-		return User::updateOrCreate($request->all());
-	}
-
-	public function destroy($id)
-	{
-		return User::destroy($id);
+		$this->model = new User;
 	}
 }

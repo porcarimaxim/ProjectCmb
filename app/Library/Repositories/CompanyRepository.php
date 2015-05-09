@@ -1,36 +1,11 @@
 <?php namespace Library\Repositories;
 
-use App\Http\Requests\Request;
-use App\Models\Company;
+use App\Library\Models\Company;
 
-class CompanyRepository implements CompanyRepositoryInterface
+class CompanyRepository extends Repository implements CompanyRepositoryInterface
 {
-
-	/**
-	 * @return mixed
-	 */
-	public function getAll()
+	public function __construct()
 	{
-		return Company::all();
-	}
-
-	public function find($id)
-	{
-		return Company::findOrFail($id);
-	}
-
-	public function store(Request $request)
-	{
-		return Company::create($request->all());
-	}
-
-	public function update(Request $request, $id)
-	{
-		return Company::updateOrCreate($request->all());
-	}
-
-	public function destroy($id)
-	{
-		return Company::destroy($id);
+		$this->model = new Company;
 	}
 }
