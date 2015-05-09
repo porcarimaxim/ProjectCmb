@@ -3,8 +3,8 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Company extends Model {
-
+class Company extends Model
+{
 	use SoftDeletes;
 
 	/**
@@ -14,8 +14,10 @@ class Company extends Model {
 	 */
 	protected $dates = ['deleted_at'];
 
-	//
+	/**
+	 * The attributes that are mass assignable
+	 *
+	 * @var array
+	 */
 	protected $fillable = ['name', 'email'];
-
-
 }
