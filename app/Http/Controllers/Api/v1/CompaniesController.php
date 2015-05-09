@@ -92,8 +92,7 @@ class CompaniesController extends ApiController {
 	 */
 	public function destroy($id)
 	{
-		// TODO implement destroy response
-		return $this->company->destroy($id);
+		return $this->respondDestroy($this->company->destroy($id));
 	}
 
 }

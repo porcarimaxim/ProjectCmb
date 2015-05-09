@@ -92,8 +92,7 @@ class CallsController extends ApiController
 	 */
 	public function destroy($id)
 	{
-		// TODO implement destroy response
-		return $this->call->destroy($id);
+		return $this->respondDestroy($this->call->destroy($id));
 	}
 
 }

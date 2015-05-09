@@ -65,14 +65,14 @@ abstract class ApiController extends BaseController {
 		return $this->setStatusCode(IlluminateResponse::HTTP_INTERNAL_SERVER_ERROR)->respondWithError($message);
 	}
 
-	public function respondError($data, $headers = [])
+	private function respond($data, $headers = [])
 	{
 		return Response::json($data, $this->getStatusCode(), $headers);
 	}
 
-	public function respondWithError($message)
+	private function respondWithError($message)
 	{
-		return $this->respondError([
+		return $this->respond([
 			'error' => [
 				'message' => $message,
 				'status_code' => $this->getStatusCode()
@@ -80,6 +80,13 @@ abstract class ApiController extends BaseController {
 		]);
 	}
 
-	// TODO delete response
+	public function respondDestroy($id, $message = 'Resource deleted') {
+		return $this->respond([
+			$this->getResourceKey() => [
+				'id' => $id,
+				'message' => $message
+			]
+		]);
+	}
 
 }

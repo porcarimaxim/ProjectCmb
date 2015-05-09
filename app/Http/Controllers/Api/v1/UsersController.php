@@ -92,8 +92,7 @@ class UsersController extends ApiController
 	 */
 	public function destroy($id)
 	{
-		// TODO implement destroy response
-		return $this->user->destroy($id);
+		return $this->respondDestroy($this->user->destroy($id));
 	}
 
 }
