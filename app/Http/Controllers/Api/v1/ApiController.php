@@ -10,7 +10,31 @@ abstract class ApiController extends BaseController {
 
 	use DispatchesCommands, ValidatesRequests;
 
+	/**
+	 * @var int
+	 */
 	protected $statusCode = 200;
+
+	/**
+	 * @var string
+	 */
+	protected $resourceKey = 'data';
+
+	/**
+	 * @return string
+	 */
+	public function getResourceKey()
+	{
+		return $this->resourceKey;
+	}
+
+	/**
+	 * @param string $resourceKey
+	 */
+	public function setResourceKey($resourceKey)
+	{
+		$this->resourceKey = $resourceKey;
+	}
 
 	/**
 	 * @return mixed

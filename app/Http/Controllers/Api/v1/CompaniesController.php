@@ -20,22 +20,16 @@ class CompaniesController extends ApiController {
 	protected $response;
 
 	/**
-	 * @var string
-	 */
-	protected $resourceKey;
-
-	/**
 	 * @param Larasponse $response
 	 * @param CompanyRepositoryInterface $company
 	 */
 	public function __construct(Larasponse $response, CompanyRepositoryInterface $company)
 	{
+		$this->setResourceKey('companies');
+
 		$this->company = $company;
 
 		$this->response = $response;
-
-		// TODO put in extended class
-		$this->resourceKey = 'companies';
 	}
 
 	/**
@@ -45,7 +39,8 @@ class CompaniesController extends ApiController {
 	 */
 	public function index()
 	{
-		return $this->response->paginatedCollection($this->company->paginate(), new CompanyTransformer(), $this->resourceKey);
+		$companies = $this->company->paginate();
+		return $this->response->paginatedCollection($companies, new CompanyTransformer(), $this->getResourceKey());
 	}
 
 	/**
@@ -61,7 +56,7 @@ class CompaniesController extends ApiController {
 			return $this->respondNotFound();
 		}
 
-		return $this->response->collection([$company], new CompanyTransformer(), $this->resourceKey);
+		return $this->response->collection([$company], new CompanyTransformer(), $this->getResourceKey());
 	}
 
 	/**
@@ -72,7 +67,8 @@ class CompaniesController extends ApiController {
 	 */
 	public function store(CompanyRequest $request)
 	{
-		return $this->response->collection([$this->company->store($request)], new CompanyTransformer(), $this->resourceKey);
+		$company = $this->company->store($request);
+		return $this->response->collection([$company], new CompanyTransformer(), $this->getResourceKey());
 	}
 
 	/**
@@ -84,7 +80,8 @@ class CompaniesController extends ApiController {
 	 */
 	public function update(CompanyRequest $request, $id)
 	{
-		return $this->response->collection([$this->company->update($request, $id)], new CompanyTransformer(), $this->resourceKey);
+		$company = $this->company->update($request, $id);
+		return $this->response->collection([$company], new CompanyTransformer(), $this->getResourceKey());
 	}
 
 	/**
