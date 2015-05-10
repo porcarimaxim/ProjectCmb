@@ -61,6 +61,4 @@ class UserRequest extends Request
 	{
 		return new JsonResponse($errors, IlluminateResponse::HTTP_UNPROCESSABLE_ENTITY);
 	}
-
-
 }
