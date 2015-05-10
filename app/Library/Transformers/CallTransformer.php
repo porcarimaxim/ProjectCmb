@@ -11,10 +11,16 @@ class CallTransformer extends TransformerAbstract
 	 */
 	public function transform(Call $call)
 	{
-		// TODO update transformer
 		return [
 			'id' => (int)$call['id'],
-			'number' => $call['number']
+			'company_id' => (int)$call['company_id'],
+			'user_id' => (int)$call['user_id'],
+			'number' => $call['number'],
+			'timer' => (int)$call['timer'],
+			'description' => (int)$call['description'],
+			'status' => (int)$call['status'],
+			'updated_at' => $call['updated_at'],
+			'created_at' => $call['created_at']
 		];
 	}
 

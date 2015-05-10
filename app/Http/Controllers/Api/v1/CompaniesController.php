@@ -92,7 +92,12 @@ class CompaniesController extends ApiController {
 	 */
 	public function destroy($id)
 	{
-		return $this->respondDestroy($this->company->destroy($id));
+		$success = $this->company->destroy($id);
+		if (!$success) {
+			return $this->respondNotFound();
+		}
+
+		return $this->respondDestroy($id);
 	}
 
 }

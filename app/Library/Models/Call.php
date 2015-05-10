@@ -19,5 +19,5 @@ class Call extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['company_id', 'number', 'time', 'description', 'status'];
+	protected $fillable = ['company_id', 'number', 'timer', 'description', 'status'];
 }

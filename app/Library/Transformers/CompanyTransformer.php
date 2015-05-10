@@ -13,7 +13,10 @@ class CompanyTransformer extends TransformerAbstract
 	{
 		return [
 			'id' => (int)$company['id'],
-			'name' => $company['name']
+			'name' => $company['name'],
+			'email' => $company['email'],
+			'updated_at' => $company['updated_at'],
+			'created_at' => $company['created_at']
 		];
 	}
 
