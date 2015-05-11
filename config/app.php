@@ -150,6 +150,7 @@ return [
 		 */
 		'Sorskod\Larasponse\LarasponseServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+		'Firebase\Integration\Laravel\FirebaseServiceProvider',
 		'App\Providers\BackendServiceProvider',
 	],
 
@@ -201,6 +202,7 @@ return [
 		/*
 		 * Custom aliases
 		 */
+		'Firebase' => 'Firebase\Integration\Laravel\Firebase',
 	],
 
 ];

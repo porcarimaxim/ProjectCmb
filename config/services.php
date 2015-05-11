@@ -35,4 +35,9 @@ return [
 		'secret' => '',
 	],
 
+	'firebase' => [
+		'base_url' => 'https://project-cmb.firebaseio.com/',
+		'token' => env('FIREBASE_TOKEN', '')
+	]
+
 ];

@@ -29,6 +29,7 @@
         "App\\Providers\\RouteServiceProvider",
         "Sorskod\\Larasponse\\LarasponseServiceProvider",
         "Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider",
+        "Firebase\\Integration\\Laravel\\FirebaseServiceProvider",
         "App\\Providers\\BackendServiceProvider"
     ],
     "eager": [
@@ -49,6 +50,7 @@
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
         "Sorskod\\Larasponse\\LarasponseServiceProvider",
+        "Firebase\\Integration\\Laravel\\FirebaseServiceProvider",
         "App\\Providers\\BackendServiceProvider"
     ],
     "deferred": {
