@@ -14,7 +14,16 @@ class DatabaseSeeder extends Seeder {
 	{
 		Model::unguard();
 
-		// $this->call('UserTableSeeder');
+		$this->call('CompaniesTableSeeder');
+		$this->call('UsersTableSeeder');
+		$this->call('CallsTableSeeder');
+	}
+
+	private function cleanDatabase()
+	{
+		DB::statement('TRUNCATE TABLE companies CASCADE;');
+		DB::statement('TRUNCATE TABLE users CASCADE;');
+		DB::statement('TRUNCATE TABLE calls CASCADE;');
 	}
 
 }

@@ -22,5 +22,11 @@ class BackendServiceProvider extends ServiceProvider{
 			'App\Library\Repositories\CallRepository'
 		);
 
+
+		$this->app->bind(
+			'App\Library\RepositoriesInterface\UserStatusInterface',
+			'App\Library\Repositories\UserStatusRepository'
+		);
+
 	}
 }
