@@ -12,13 +12,13 @@ class CallTransformer extends TransformerAbstract
 	public function transform(Call $call)
 	{
 		return [
-			'id' => (int)$call['id'],
-			'company_id' => (int)$call['company_id'],
-			'user_id' => (int)$call['user_id'],
+			'id' => $call['id'],
+			'company_id' => $call['company_id'],
+			'user_id' => $call['user_id'],
 			'number' => $call['number'],
-			'timer' => (int)$call['timer'],
-			'description' => (int)$call['description'],
-			'status' => (int)$call['status'],
+			'timer' => $call['timer'],
+			'description' => $call['description'],
+			'status' => $call['status'],
 			'updated_at' => $call['updated_at'],
 			'created_at' => $call['created_at']
 		];

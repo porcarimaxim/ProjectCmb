@@ -20,4 +20,13 @@ class Company extends Model
 	 * @var array
 	 */
 	protected $fillable = ['name', 'email'];
+
+	/**
+	 * Set relation one to many with user model
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
+	public function users() {
+		return $this->hasMany('App\Library\Models\User');
+	}
 }

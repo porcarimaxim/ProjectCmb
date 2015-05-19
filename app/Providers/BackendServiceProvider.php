@@ -6,7 +6,6 @@ class BackendServiceProvider extends ServiceProvider{
 
 	public function register()
 	{
-
 		$this->app->bind(
 			'App\Library\RepositoriesInterface\UserInterface',
 			'App\Library\Repositories\UserRepository'
@@ -22,11 +21,9 @@ class BackendServiceProvider extends ServiceProvider{
 			'App\Library\Repositories\CallRepository'
 		);
 
-
 		$this->app->bind(
 			'App\Library\RepositoriesInterface\UserStatusInterface',
 			'App\Library\Repositories\UserStatusRepository'
 		);
-
 	}
 }

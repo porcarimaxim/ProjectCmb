@@ -12,8 +12,8 @@ class UserTransformer extends TransformerAbstract
 	public function transform(User $user)
 	{
 		return [
-			'id' => (int)$user['id'],
-			'company_id' => (int)$user['company_id'],
+			'id' => $user['id'],
+			'company_id' => $user['company_id'],
 			'first_name' => $user['first_name'],
 			'last_name' => $user['last_name'],
 			'email' => $user['email'],
@@ -21,5 +21,4 @@ class UserTransformer extends TransformerAbstract
 			'created_at' => $user['created_at']
 		];
 	}
-
 }

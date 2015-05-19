@@ -45,4 +45,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 * @var array
 	 */
 	protected $guarded = ['password'];
+
+	/**
+	 * Set relation many to one with company model
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function company() {
+		return $this->belongsTo('App\Library\Models\Company');
+	}
 }
