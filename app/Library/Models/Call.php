@@ -20,4 +20,13 @@ class Call extends Model
 	 * @var array
 	 */
 	protected $fillable = ['company_id', 'number', 'timer', 'description', 'status'];
+
+	/**
+	 * Set relation with user model
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
+	public function user() {
+		return $this->belongsTo('App\Library\Models\User');
+	}
 }
