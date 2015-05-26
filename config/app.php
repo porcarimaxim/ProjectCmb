@@ -151,6 +151,7 @@ return [
 		'Sorskod\Larasponse\LarasponseServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Firebase\Integration\Laravel\FirebaseServiceProvider',
+		'Barryvdh\Cors\CorsServiceProvider',
 		'App\Providers\BackendServiceProvider',
 	],
 
