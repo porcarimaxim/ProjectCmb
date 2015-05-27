@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "167c4ce4c4c7f6b64808945556f96c65",
+    "hash": "d08905bb10949982f28cd59dfb3f65d7",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -383,12 +383,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eelkevdbos/firebase-php.git",
-                "reference": "d5b3959f8445896fc022e44d28e4123bc061a568"
+                "reference": "18aa0444773a68643e9ae1bd12118336887f891d"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/eelkevdbos/firebase-php/zipball/18aa0444773a68643e9ae1bd12118336887f891d",
-                "reference": "d5b3959f8445896fc022e44d28e4123bc061a568",
+                "reference": "18aa0444773a68643e9ae1bd12118336887f891d",
                 "shasum": ""
             },
             "require": {
@@ -423,7 +423,7 @@
                 "rest",
                 "wrapper"
             ],
-            "time": "2015-05-07 21:51:08"
+            "time": "2015-05-15 10:38:22"
         },
         {
             "name": "firebase/php-jwt",
