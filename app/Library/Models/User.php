@@ -69,7 +69,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
 	 */
-	public function userStatus() {
+	public function status() {
 		return $this->hasOne('App\Library\Models\UserStatus');
 	}
 }

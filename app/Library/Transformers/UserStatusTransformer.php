@@ -11,6 +11,9 @@ class UserStatusTransformer extends TransformerAbstract
 	 */
 	public function transform(UserStatus $userStatus)
 	{
-		return $userStatus;
+		return [
+			'id' => $userStatus['id'],
+			'is_available' => $userStatus['is_available']
+		];
 	}
 }
