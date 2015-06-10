@@ -217,9 +217,21 @@ class ModelsCommand extends Command
     {
         $table = $model->getConnection()->getTablePrefix() . $model->getTable();
         $schema = $model->getConnection()->getDoctrineSchemaManager($table);
-        $schema->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+        $databasePlatform = $schema->getDatabasePlatform();
+        $databasePlatform->registerDoctrineTypeMapping('enum', 'string');
 
-        $columns = $schema->listTableColumns($table);
+        $platformName = $databasePlatform->getName();
+        $customTypes = $this->laravel['config']->get("ide-helper.custom_db_types.{$platformName}", array());
+        foreach ($customTypes as $yourTypeName => $doctrineTypeName) {
+            $databasePlatform->registerDoctrineTypeMapping($yourTypeName, $doctrineTypeName);
+        }
+
+        $database = null;
+        if (strpos($table, '.')) {
+            list($database, $table) = explode('.', $table);
+        }
+
+        $columns = $schema->listTableColumns($table, $database);
 
         if ($columns) {
             foreach ($columns as $column) {
@@ -303,7 +315,7 @@ class ModelsCommand extends Command
                         $args = $this->getParameters($reflection);
                         //Remove the first ($query) argument
                         array_shift($args);
-                        $this->setMethod($name, '\\' . $reflection->class, $args);
+                        $this->setMethod($name, '\Illuminate\Database\Query\Builder|\\' . $reflection->class, $args);
                     }
                 } elseif (!method_exists('Eloquent', $method) && !Str::startsWith($method, 'get')) {
 
@@ -333,7 +345,7 @@ class ModelsCommand extends Command
                         $search = '$this->' . $relation . '(';
                         if ($pos = stripos($code, $search)) {
                             $code = substr($code, $pos + strlen($search));
-                            $arguments = explode(',', substr($code, 0, strpos($code, ');')));
+                            $arguments = explode(',', substr($code, 0, strpos($code, ')')));
                             //Remove quotes, ensure 1 \ in front of the model
                             $returnModel = $this->getClassName($arguments[0], $model);
                             if ($relation === "belongsToMany" or $relation === 'hasMany' or $relation === 'morphMany' or $relation === 'morphToMany') {

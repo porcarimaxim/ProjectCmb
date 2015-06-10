@@ -5,31 +5,35 @@ use App\Commands\SendFirebase;
 use Firebase\Integration\Laravel\Firebase;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendFirebaseHandler {
-
+class SendFirebaseHandler
+{
 	/**
 	 * Create the command handler.
-	 *
-	 * @return void
 	 */
 	public function __construct()
 	{
-		//
+
 	}
 
 	/**
 	 * Handle the command.
 	 *
-	 * @param  SendFirebase  $command
+	 * @param  SendFirebase $command
 	 * @return void
 	 */
 	public function handle(SendFirebase $command)
 	{
-		//
-		$result = false;
+		$data = $command->getData();
+		$model = $data['model'];
+		$type = $data['type'];
 
-		// send data to firebase
-		Firebase::push('/events', $command->getData());
+		switch ($type) {
+			case 'UserStatus':
+				$ref = 'company-' . $model['company_id'] . '/availability/user-' . $model['user_id'] . '/';
+				$val = $model['is_available'];
+				Firebase::set($ref, $val);
+				break;
+		}
 
 		$command->delete();
 	}

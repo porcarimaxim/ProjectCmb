@@ -1,8 +1,6 @@
 <?php namespace App\Library\Repositories;
 
-use App\Commands\SendFirebase;
 use App\Http\Requests\Request;
-use Illuminate\Support\Facades\Queue;
 
 abstract class Repository
 {
@@ -27,7 +25,7 @@ abstract class Repository
 	public function store(Request $request)
 	{
 		$model = $this->getModel()->create($request->all());
-		Queue::push(new SendFirebase(['model' => $model->toArray(), 'action_type' => 'store']));
+		//Queue::push(new SendFirebase(['model' => $model->toArray(), 'action_type' => 'store']));
 
 		return $model;
 	}
@@ -35,15 +33,15 @@ abstract class Repository
 	public function update(Request $request, $id)
 	{
 		$model = $this->getModel()->updateOrCreate(['id' => $id], $request->all());
-		Queue::push(new SendFirebase(['model' => $model->toArray(), 'action_type' => 'update']));
+		//Queue::push(new SendFirebase(['model' => $model->toArray(), 'action_type' => 'update']));
 
 		return $model;
 	}
 
 	public function destroy($id)
 	{
-		if ($result = $this->getModel()->destroy($id))
-			Queue::push(new SendFirebase(['model' => ['id' => $id], 'action_type' => 'destroy']));
+		$result = $this->getModel()->destroy($id);
+		//Queue::push(new SendFirebase(['model' => ['id' => $id], 'action_type' => 'destroy']));
 
 		return $result;
 	}
