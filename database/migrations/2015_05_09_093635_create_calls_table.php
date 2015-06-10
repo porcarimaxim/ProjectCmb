@@ -22,7 +22,7 @@ class CreateCallsTable extends Migration {
 			$table->string('number')->nullable();
 			$table->integer('timer')->nullable();
 			$table->string('description')->nullable();
-			$table->enum('status', ['active', 'done'])->nullable();
+			$table->enum('status', ['requested', 'unanswered', 'processed'])->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});

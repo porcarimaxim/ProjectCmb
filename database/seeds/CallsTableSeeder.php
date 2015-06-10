@@ -20,7 +20,9 @@ class CallsTableSeeder extends Seeder
 		    Call::create([
 			    'company_id' => $faker->randomElement($companyIds),
 			    'user_id' => $faker->randomElement($userIds),
-			    'number' => $faker->phoneNumber
+			    'number' => $faker->phoneNumber,
+			    'timer' => $faker->randomDigit(0, 25),
+			    'status' => $faker->randomElement(['requested', 'unanswered', 'processed'])
 		    ]);
 	    }
     }

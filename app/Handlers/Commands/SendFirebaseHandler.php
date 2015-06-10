@@ -31,8 +31,7 @@ class SendFirebaseHandler {
 		// send data to firebase
 		Firebase::push('/events', $command->getData());
 
-		if( $result === true )
-			$command->delete();
+		$command->delete();
 	}
 
 }

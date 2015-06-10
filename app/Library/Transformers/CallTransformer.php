@@ -20,7 +20,9 @@ class CallTransformer extends TransformerAbstract
 			'description' => $call['description'],
 			'status' => $call['status'],
 			'updated_at' => $call['updated_at'],
-			'created_at' => $call['created_at']
+			'created_at' => $call['created_at'],
+
+			'user' => $call->user
 		];
 	}
 
