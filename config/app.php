@@ -153,6 +153,7 @@ return [
 		'Firebase\Integration\Laravel\FirebaseServiceProvider',
 		'Barryvdh\Cors\CorsServiceProvider',
 		'App\Providers\BackendServiceProvider',
+		'Marcelgwerder\ApiHandler\ApiHandlerServiceProvider'
 	],
 
 	/*
@@ -204,6 +205,7 @@ return [
 		 * Custom aliases
 		 */
 		'Firebase' => 'Firebase\Integration\Laravel\Firebase',
+		'ApiHandler' => 'Marcelgwerder\ApiHandler\Facades\ApiHandler'
 	],
 
 ];

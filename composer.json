@@ -10,7 +10,8 @@
 		"barryvdh/laravel-ide-helper": "~2.0.1",
         "sorskod/larasponse": "dev-L5",
 		"eelkevdbos/firebase-php": "dev-master",
-		"barryvdh/laravel-cors": "0.5.x@dev"
+		"barryvdh/laravel-cors": "0.5.x@dev",
+		"marcelgwerder/laravel-api-handler": "~0.5.3"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

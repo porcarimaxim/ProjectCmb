@@ -1,9 +1,16 @@
 <?php namespace App\Library\Repositories;
 
 use App\Http\Requests\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Marcelgwerder\ApiHandler\Facades\ApiHandler;
 
 abstract class Repository
 {
+
+	/**
+	 * The base eloquent model
+	 * @var Eloquent
+	 */
 	protected $model;
 
 
@@ -14,18 +21,20 @@ abstract class Repository
 
 	public function getAll()
 	{
-		return $this->getModel()->all();
+		//TODO nu e corect
+		$parser = ApiHandler::parseMultiple($this->getModel(), []);
+		return $parser->getResult();
 	}
 
 	public function find($id)
 	{
-		return $this->getModel()->find($id);
+		$parser = ApiHandler::parseSingle($this->getModel(), $id);
+		return $parser->getResult();
 	}
 
 	public function store(Request $request)
 	{
 		$model = $this->getModel()->create($request->all());
-		//Queue::push(new SendFirebase(['model' => $model->toArray(), 'action_type' => 'store']));
 
 		return $model;
 	}
@@ -33,21 +42,22 @@ abstract class Repository
 	public function update(Request $request, $id)
 	{
 		$model = $this->getModel()->updateOrCreate(['id' => $id], $request->all());
-		//Queue::push(new SendFirebase(['model' => $model->toArray(), 'action_type' => 'update']));
-
 		return $model;
 	}
 
 	public function destroy($id)
 	{
 		$result = $this->getModel()->destroy($id);
-		//Queue::push(new SendFirebase(['model' => ['id' => $id], 'action_type' => 'destroy']));
-
 		return $result;
 	}
 
 	public function paginate()
 	{
-		return $this->getModel()->paginate();
+		$parser = ApiHandler::parseMultiple($this->getModel(), []);
+		$builder = $parser->getBuilder();
+		$query = $builder->getQuery();
+		$total = $query->getCountForPagination();
+		$limit = isset( $query->limit ) ? $query->limit : 25;
+		return new LengthAwarePaginator($builder->get(), $total, $limit);
 	}
 }
