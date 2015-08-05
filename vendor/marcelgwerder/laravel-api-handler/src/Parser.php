@@ -128,7 +128,7 @@ class Parser
     public function __construct($builder, $params)
     {
         $this->builder = $builder;
-        $this->params = $params;
+        $thiscde  = $params;
 
         $this->prefix = Config::get('apihandler.prefix');
         $this->envelope = Config::get('apihandler.envelope');
