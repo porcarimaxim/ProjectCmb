@@ -13,7 +13,15 @@ class UsersTableSeeder extends Seeder
         $faker = Faker::create();
 	    $companyIds = Company::lists('id');
 
-	    foreach(range(0, count($companyIds)-1) as $index)
+		User::create([
+			'company_id' => $companyIds[0],
+			'first_name' => 'Porcari',
+			'last_name' => 'Maxim',
+			'email' => 'porcarimaxim@gmail.com',
+			'password' => Hash::make('qwerty')
+		]);
+
+	    foreach(range(1, count($companyIds)-1) as $index)
 	    {
 		    User::create([
 			    'company_id' => $companyIds[$index],
