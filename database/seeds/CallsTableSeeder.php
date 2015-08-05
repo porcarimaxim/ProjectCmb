@@ -12,9 +12,8 @@ class CallsTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-	    $companyIds = Company::lists('id');
-	    $userIds = User::lists('id');
-
+	    $companyIds = Company::lists('id')->all();
+	    $userIds = User::lists('id')->all();
 	    foreach(range(0, 100) as $index)
 	    {
 		    Call::create([

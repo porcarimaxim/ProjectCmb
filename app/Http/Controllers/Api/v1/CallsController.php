@@ -25,6 +25,8 @@ class CallsController extends ApiController
 	 */
 	public function __construct(Larasponse $fractal, CallInterface $call)
 	{
+		$this->middleware('auth');
+
 		$this->setResourceKey('calls');
 
 		$this->call = $call;
