@@ -25,6 +25,8 @@ class CompaniesController extends ApiController {
 	 */
 	public function __construct(Larasponse $fractal, CompanyInterface $company)
 	{
+		parent::__construct();
+
 		$this->setResourceKey('companies');
 
 		$this->company = $company;

@@ -26,4 +26,24 @@ class SendFirebase extends Command implements ShouldBeQueued {
 		$this->data = $message;
 	}
 
+	/**
+	 * Execute the command.
+	 *
+	 * @return void
+	 */
+	public function handle() {
+		$data = $this->getData();
+		$model = $data['model'];
+		$type = $data['type'];
+
+		switch ($type) {
+			case 'UserStatus':
+				$ref = 'company-' . $model['company_id'] . '/availability/user-' . $model['user_id'] . '/';
+				$val = $model['is_available'];
+				Firebase::set($ref, $val);
+				break;
+		}
+
+		$this->delete();
+	}
 }

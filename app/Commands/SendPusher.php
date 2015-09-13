@@ -28,4 +28,14 @@ class SendPusher extends Command implements ShouldBeQueued
 		$this->data = $message;
 	}
 
+	/**
+	 * Execute the command.
+	 *
+	 * @return void
+	 */
+	public function handle()
+	{
+		dump($this->getData());
+		//
+	}
 }

@@ -4,8 +4,6 @@ use App\Http\Requests\Request;
 
 interface ApiInterface
 {
-	public function getAll();
-
 	public function find($id);
 
 	public function store(Request $request);

@@ -25,7 +25,12 @@ abstract class ApiController extends BaseController
 	 */
 	protected $resourceKey = 'data';
 
-	/**
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
+
+		/**
 	 * @return string
 	 */
 	public function getResourceKey()

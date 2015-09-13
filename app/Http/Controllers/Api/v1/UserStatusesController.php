@@ -25,6 +25,8 @@ class UserStatusesController extends ApiController
 	 */
 	public function __construct(Larasponse $fractal, UserStatusInterface $status)
 	{
+		parent::__construct();
+
 		$this->setResourceKey('statuses');
 
 		$this->status = $status;

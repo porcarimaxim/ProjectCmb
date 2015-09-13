@@ -25,6 +25,8 @@ class UsersController extends ApiController
 	 */
 	public function __construct(Larasponse $fractal, UserInterface $user)
 	{
+		parent::__construct();
+
 		$this->setResourceKey('users');
 
 		$this->user = $user;

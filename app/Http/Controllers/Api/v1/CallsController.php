@@ -25,7 +25,7 @@ class CallsController extends ApiController
 	 */
 	public function __construct(Larasponse $fractal, CallInterface $call)
 	{
-		$this->middleware('auth');
+		parent::__construct();
 
 		$this->setResourceKey('calls');
 
@@ -48,11 +48,14 @@ class CallsController extends ApiController
 	/**
 	 * Display the specified resource.
 	 *
+	 * @param CallRequest $request
 	 * @param  int $id
 	 * @return mixed
 	 */
-	public function show($id)
+	public function show(CallRequest $request, $id)
 	{
+		$request->validate();
+
 		$call = $this->call->find($id);
 		if (!$call) {
 			return $this->respondNotFound();
@@ -83,6 +86,9 @@ class CallsController extends ApiController
 	public function update(CallRequest $request, $id)
 	{
 		$call = $this->call->update($request, $id);
+		if (!$call) {
+			return $this->respondNotFound();
+		}
 		return $this->fractal->collection([$call], new CallTransformer(), $this->getResourceKey());
 	}
 
@@ -98,7 +104,6 @@ class CallsController extends ApiController
 		if (!$success) {
 			return $this->respondNotFound();
 		}
-
 		return $this->respondDestroy($id);
 	}
 
