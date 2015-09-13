@@ -13,7 +13,6 @@ class CallTransformer extends TransformerAbstract
 	{
 		return [
 			'id' => $call['id'],
-			'company_id' => $call['company_id'],
 			'user_id' => $call['user_id'],
 			'number' => $call['number'],
 			'timer' => $call['timer'],

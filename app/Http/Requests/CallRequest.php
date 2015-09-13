@@ -1,5 +1,6 @@
 <?php namespace App\Http\Requests;
 
+use Auth;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Illuminate\Http\Response as IlluminateResponse;
 
@@ -40,11 +41,12 @@ class CallRequest extends Request
 			case 'PATCH':
 			{
 				return [
-					'number' => 'required',
+					'number' => 'required'
 				];
 			}
 			default:break;
 		}
+		return [];
 	}
 
 	//TODO de stilizat dupa modelul responsului
