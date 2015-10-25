@@ -34,9 +34,10 @@ class AppGuard extends Guard
 
 	public function onceKey($apiKey)
 	{
-		if (!$this->key($apiKey)) {
-			return new Response('Invalid credentials.', 401, []);
-		}
+		$this->key($apiKey);
+//		if (!$this->key($apiKey)) {
+//			return new Response('Invalid X-Api-Key.', 401, []);
+//		}
 	}
 
 }

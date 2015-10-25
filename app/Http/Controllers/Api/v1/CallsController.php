@@ -30,8 +30,7 @@ class CallsController extends ApiController
 	{
 		parent::__construct();
 
-		$this->middleware = [];
-//		$this->insertMiddleware('api.key', 0, ['only' => 'store']);
+		$this->insertMiddleware('api.key', 0, ['only' => 'store']);
 
 		$this->setResourceKey('calls');
 
