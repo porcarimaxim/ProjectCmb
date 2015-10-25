@@ -31,6 +31,21 @@ class User extends Base implements AuthenticatableContract, CanResetPasswordCont
 	protected $hidden = ['password', 'remember_token'];
 
 	/**
+	 * The attributes that should be casted to native types.
+	 *
+	 * @var array
+	 */
+	protected $casts = [
+		'options' => 'array',
+	];
+
+	/**
+	 *  Available options for user
+	 */
+	public $castAttr = [
+		'is_available'
+	];
+	/**
 	 * Defining model guarded attributes
 	 *
 	 * @var array
@@ -53,14 +68,5 @@ class User extends Base implements AuthenticatableContract, CanResetPasswordCont
 	 */
 	public function calls() {
 		return $this->hasMany('App\Library\Models\Call');
-	}
-
-	/**
-	 * Set relation with userStatus model
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
-	 */
-	public function status() {
-		return $this->hasOne('App\Library\Models\UserStatus');
 	}
 }

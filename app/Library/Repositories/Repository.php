@@ -51,7 +51,6 @@ abstract class Repository
         $model = $this->find($id);
 
         if ($model) {
-            //$request->replace(['company_id' => $companyId]);
             $model->update($request->all());
         }
 

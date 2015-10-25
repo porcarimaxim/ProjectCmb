@@ -12,10 +12,6 @@ class UserTransformer extends TransformerAbstract
 	 */
 	public function transform(User $user)
 	{
-
-		// TODO nu trebuie asa de facut, performance issue
-		$status = $user->status;
-
 		return [
 			'id' => $user['id'],
 			'company_id' => $user['company_id'],
@@ -24,11 +20,7 @@ class UserTransformer extends TransformerAbstract
 			'email' => $user['email'],
 			'updated_at' => $user['updated_at'],
 			'created_at' => $user['created_at'],
-
-			// TODO de verificat daca se poate de folisit tranformer
-			'status' => [
-				'is_available' => $status['is_available']
-			]
+			'options' => $user['options']
 		];
 	}
 }
