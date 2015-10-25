@@ -11,18 +11,21 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
-
-Route::get('home', 'HomeController@index');
+Route::get('/', 'IndexController@index');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
 
-Route::group(['prefix' => 'api/v1'], function(){
-	Route::resource('users', 'Api\v1\UsersController', ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
-	Route::resource('user-statuses', 'Api\v1\UserStatusesController', ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
-	Route::resource('companies', 'Api\v1\CompaniesController', ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
-	Route::resource('calls', 'Api\v1\CallsController', ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+Route::group(['namespace' => 'Api\v1', 'prefix' => 'api/v1'/*, 'middleware' => ['auth.basic.once', 'auth']*/ ], function(){
+	Route::resource('users', 'UsersController', ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+	Route::resource('user-statuses', 'UserStatusesController', ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+	Route::resource('companies', 'CompaniesController', ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+	Route::resource('calls', 'CallsController', ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 });
+
+//Route::group(['namespace' => 'Widget', 'prefix' => 'api/v1', 'middleware' => ['auth.basic.once','auth'] ], function(){
+//	Route::get('widget-setup', 'WidgetController@setup' );
+//});
+

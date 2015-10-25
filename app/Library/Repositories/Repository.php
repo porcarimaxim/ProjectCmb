@@ -1,7 +1,6 @@
 <?php namespace App\Library\Repositories;
 
 use App\Http\Requests\Request;
-use Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Marcelgwerder\ApiHandler\Facades\ApiHandler;
 
@@ -36,21 +35,14 @@ abstract class Repository
 
     public function find($id)
     {
-        $currentUser = Auth::getUser();
-        $companyId = $currentUser->company_id;
-
-        $filters = [$this->getModelKeyName() => $id/*, 'company_id' => $companyId*/];
+        $filters = [$this->getModelKeyName() => $id];
         $parser = ApiHandler::parseSingle($this->getModel(), $filters, []);
         return $parser->getResult();
     }
 
     public function store(Request $request)
     {
-        $currentUser = Auth::getUser();
-        $companyId = $currentUser->company_id;
-        //$request->replace(['company_id' => $companyId]);
         $model = $this->getModel()->create($request->all());
-
         return $model;
     }
 
@@ -59,10 +51,8 @@ abstract class Repository
         $model = $this->find($id);
 
         if ($model) {
-            $currentUser = Auth::getUser();
-            $companyId = $currentUser->company_id;
             //$request->replace(['company_id' => $companyId]);
-            $model = $model->update($request->all());
+            $model->update($request->all());
         }
 
         return $model;
@@ -78,10 +68,9 @@ abstract class Repository
         return $result;
     }
 
-    public function paginate()
+    public function paginate( $filters = [] )
     {
-        $currentUser = Auth::getUser();
-        $parser = ApiHandler::parseMultiple($this->getModel(), [], [/*'company_id' => $currentUser->company_id*/]);
+        $parser = ApiHandler::parseMultiple($this->getModel(), [], $filters);
         $builder = $parser->getBuilder();
         $query = $builder->getQuery();
         $total = $query->getCountForPagination();

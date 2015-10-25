@@ -1,7 +1,8 @@
 <?php namespace App\Http\Controllers\Api\v1;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Foundation\Bus\DispatchesCommands;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Response as IlluminateResponse;
@@ -9,7 +10,7 @@ use Illuminate\Http\Response as IlluminateResponse;
 abstract class ApiController extends BaseController
 {
 
-	use DispatchesCommands, ValidatesRequests;
+	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
 	/**
 	 * Respond status code
@@ -27,10 +28,27 @@ abstract class ApiController extends BaseController
 
 	public function __construct()
 	{
+		$this->middleware('auth.basic.once');
 		$this->middleware('auth');
 	}
 
-		/**
+	/**
+	 * Register middleware on the controller.
+	 *
+	 * @param  string $middleware
+	 * @param  int $index
+	 * @param  array $options
+	 * @return void
+	 */
+	public function insertMiddleware($middleware, $index, array $options = [])
+	{
+		$this->middleware = array_slice($this->middleware, 0, $index, true) +
+			[$middleware => $options] +
+			array_slice($this->middleware, $index, count($this->middleware), true);
+//		$this->middleware = $result;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getResourceKey()
@@ -102,6 +120,17 @@ abstract class ApiController extends BaseController
 	public function respondNotFound($message = 'Resource not found')
 	{
 		return $this->setStatusCode(IlluminateResponse::HTTP_NOT_FOUND)->respondWithError($message);
+	}
+
+	/**
+	 * Return forbidden respond
+	 *
+	 * @param string $message
+	 * @return mixed
+	 */
+	public function respondForbidden($message = 'insufficient permissions')
+	{
+		return $this->setStatusCode(IlluminateResponse::HTTP_FORBIDDEN)->respondWithError($message);
 	}
 
 	/**

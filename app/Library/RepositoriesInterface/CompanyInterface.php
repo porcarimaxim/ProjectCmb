@@ -3,4 +3,5 @@
 interface CompanyInterface extends ApiInterface
 {
 
+	public function getByApiKey( $apiKey );
 }

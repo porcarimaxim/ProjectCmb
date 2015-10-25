@@ -5,6 +5,7 @@ use App\Http\Requests;
 use App\Http\Requests\CompanyRequest;
 use App\Library\RepositoriesInterface\CompanyInterface;
 use App\Library\Transformers\CompanyTransformer;
+use Illuminate\Contracts\Auth\Guard;
 use Sorskod\Larasponse\Larasponse;
 
 class CompaniesController extends ApiController {
@@ -22,14 +23,17 @@ class CompaniesController extends ApiController {
 	/**
 	 * @param Larasponse $fractal
 	 * @param CompanyInterface $company
+	 * @param Guard $auth
 	 */
-	public function __construct(Larasponse $fractal, CompanyInterface $company)
+	public function __construct(Larasponse $fractal, CompanyInterface $company, Guard $auth )
 	{
 		parent::__construct();
 
 		$this->setResourceKey('companies');
 
 		$this->company = $company;
+
+		$this->user = $auth->user();
 
 		$this->fractal = $fractal;
 	}
@@ -41,7 +45,8 @@ class CompaniesController extends ApiController {
 	 */
 	public function index()
 	{
-		$companies = $this->company->paginate();
+		$filters = ['id' => $this->user->company_id];
+		$companies = $this->company->paginate($filters);
 		return $this->fractal->paginatedCollection($companies, new CompanyTransformer(), $this->getResourceKey());
 	}
 
@@ -54,6 +59,7 @@ class CompaniesController extends ApiController {
 	public function show($id)
 	{
 		$company = $this->company->find($id);
+
 		if (!$company) {
 			return $this->respondNotFound();
 		}

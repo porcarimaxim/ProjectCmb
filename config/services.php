@@ -35,4 +35,9 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'firebase' => [
+        'base_url' => 'https://project-cmb.firebaseio.com/',
+        'token' => env('FIREBASE_TOKEN', '')
+    ]
+
 ];

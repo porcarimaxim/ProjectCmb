@@ -5,6 +5,8 @@ use App\Http\Requests;
 use App\Http\Requests\CallRequest;
 use App\Library\RepositoriesInterface\CallInterface;
 use App\Library\Transformers\CallTransformer;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Sorskod\Larasponse\Larasponse;
 
 class CallsController extends ApiController
@@ -22,10 +24,14 @@ class CallsController extends ApiController
 	/**
 	 * @param Larasponse $fractal
 	 * @param CallInterface $call
+	 * @param Guard $auth
 	 */
 	public function __construct(Larasponse $fractal, CallInterface $call)
 	{
 		parent::__construct();
+
+		$this->middleware = [];
+//		$this->insertMiddleware('api.key', 0, ['only' => 'store']);
 
 		$this->setResourceKey('calls');
 
@@ -41,25 +47,29 @@ class CallsController extends ApiController
 	 */
 	public function index()
 	{
-		$calls = $this->call->paginate();
+		$user = Auth::user();
+		$filters = ['company_id' => $user->company_id];
+		$calls = $this->call->paginate($filters);
 		return $this->fractal->paginatedCollection($calls, new CallTransformer(), $this->getResourceKey());
 	}
 
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param CallRequest $request
 	 * @param  int $id
 	 * @return mixed
 	 */
-	public function show(CallRequest $request, $id)
+	public function show($id)
 	{
-		$request->validate();
-
 		$call = $this->call->find($id);
+
 		if (!$call) {
 			return $this->respondNotFound();
 		}
+
+		if (Gate::denies('view', $call)) {
+			return $this->respondForbidden();
+		};
 
 		return $this->fractal->collection([$call], new CallTransformer(), $this->getResourceKey());
 	}
@@ -72,6 +82,17 @@ class CallsController extends ApiController
 	 */
 	public function store(CallRequest $request)
 	{
+		$user = Auth::user();
+
+		if (Gate::denies('store')) {
+			return $this->respondForbidden();
+		};
+
+		$request->merge([
+			'company_id' => $user->company_id,
+			'user_id' => null
+		]);
+
 		$call = $this->call->store($request);
 		return $this->fractal->collection([$call], new CallTransformer(), $this->getResourceKey());
 	}
@@ -85,10 +106,24 @@ class CallsController extends ApiController
 	 */
 	public function update(CallRequest $request, $id)
 	{
-		$call = $this->call->update($request, $id);
+		$user = Auth::user();
+		$request->merge([
+			'company_id' => $user->company_id,
+			'user_id' => $user->id
+		]);
+
+		$call = $this->call->find($id);
+
 		if (!$call) {
 			return $this->respondNotFound();
 		}
+
+		if (Gate::denies('update', $call)) {
+			return $this->respondForbidden();
+		};
+
+		$call = $this->call->update($request, $id);
+
 		return $this->fractal->collection([$call], new CallTransformer(), $this->getResourceKey());
 	}
 
@@ -100,10 +135,22 @@ class CallsController extends ApiController
 	 */
 	public function destroy($id)
 	{
+		$call = $this->call->find($id);
+
+		if (!$call) {
+			return $this->respondNotFound();
+		}
+
+		if (Gate::denies('delete', $call)) {
+			return $this->respondForbidden();
+		};
+
 		$success = $this->call->destroy($id);
+
 		if (!$success) {
 			return $this->respondNotFound();
 		}
+
 		return $this->respondDestroy($id);
 	}
 

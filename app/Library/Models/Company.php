@@ -1,19 +1,8 @@
 <?php namespace App\Library\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Company extends Model
+class Company extends Base
 {
-	use SoftDeletes;
-
-	/**
-	 * Soft delete
-	 *
-	 * @var array
-	 */
-	protected $dates = ['deleted_at'];
-
 	/**
 	 * The attributes that are mass assignable
 	 *
@@ -28,5 +17,23 @@ class Company extends Model
 	 */
 	public function users() {
 		return $this->hasMany('App\Library\Models\User');
+	}
+
+	/**
+	 * Set relation one to many with user model
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
+	public function apiKeys() {
+		return $this->hasMany('App\Library\Models\ApiKey');
+	}
+
+	/**
+	 * Set relation one to many with user model
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
+	public function firebaseAccounts() {
+		return $this->hasMany('App\Library\Models\FirebaseAccount');
 	}
 }

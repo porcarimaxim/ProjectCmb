@@ -12,5 +12,5 @@ interface ApiInterface
 
 	public function destroy($id);
 
-	public function paginate();
+	public function paginate($filters);
 }

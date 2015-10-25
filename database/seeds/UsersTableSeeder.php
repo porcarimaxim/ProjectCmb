@@ -18,6 +18,7 @@ class UsersTableSeeder extends Seeder
 			'first_name' => 'Porcari',
 			'last_name' => 'Maxim',
 			'email' => 'porcarimaxim@gmail.com',
+			'firebase_key' => $faker->md5(),
 			'password' => Hash::make('qwerty')
 		]);
 
@@ -28,6 +29,7 @@ class UsersTableSeeder extends Seeder
 			    'first_name' => $faker->firstName,
 			    'last_name' => $faker->lastName,
 			    'email' => $faker->email,
+			    'firebase_key' => $faker->md5(),
 			    'password' => Hash::make('qwerty')
 		    ]);
 	    }

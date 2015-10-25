@@ -14,7 +14,8 @@ class CompaniesTableSeeder extends Seeder {
 	    {
 	        Company::create([
 		        'name' => $faker->company,
-		        'email' => $faker->companyEmail
+		        'email' => $faker->companyEmail,
+		        'firebase_key' => $faker->md5()
 	        ]);
         }
     }

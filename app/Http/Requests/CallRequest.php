@@ -1,6 +1,5 @@
 <?php namespace App\Http\Requests;
 
-use Auth;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Illuminate\Http\Response as IlluminateResponse;
 
@@ -26,11 +25,6 @@ class CallRequest extends Request
 	{
 		switch($this->method())
 		{
-			case 'GET':
-			case 'DELETE':
-			{
-				return [];
-			}
 			case 'POST':
 			{
 				return [

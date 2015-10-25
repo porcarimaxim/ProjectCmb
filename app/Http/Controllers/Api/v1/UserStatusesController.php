@@ -5,6 +5,7 @@ use App\Http\Requests;
 use App\Http\Requests\UserStatusRequest;
 use App\Library\RepositoriesInterface\UserStatusInterface;
 use App\Library\Transformers\UserStatusTransformer;
+use Illuminate\Contracts\Auth\Guard;
 use Sorskod\Larasponse\Larasponse;
 
 class UserStatusesController extends ApiController
@@ -22,14 +23,17 @@ class UserStatusesController extends ApiController
 	/**
 	 * @param Larasponse $fractal
 	 * @param UserStatusInterface $status
+	 * @param Guard $auth
 	 */
-	public function __construct(Larasponse $fractal, UserStatusInterface $status)
+	public function __construct(Larasponse $fractal, UserStatusInterface $status, Guard $auth )
 	{
 		parent::__construct();
 
 		$this->setResourceKey('statuses');
 
 		$this->status = $status;
+
+		$this->currentUser = $auth->user();
 
 		$this->fractal = $fractal;
 	}
@@ -41,7 +45,8 @@ class UserStatusesController extends ApiController
 	 */
 	public function index()
 	{
-		$statuses = $this->status->paginate();
+		$filters = ['company_id' => $this->currentUser->company_id];
+		$statuses = $this->status->paginate($filters);
 		return $this->fractal->paginatedCollection($statuses, new UserStatusTransformer(), $this->getResourceKey());
 	}
 

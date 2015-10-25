@@ -5,6 +5,8 @@ use App\Http\Requests;
 use App\Http\Requests\UserRequest;
 use App\Library\RepositoriesInterface\UserInterface;
 use App\Library\Transformers\UserTransformer;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Sorskod\Larasponse\Larasponse;
 
 class UsersController extends ApiController
@@ -22,8 +24,9 @@ class UsersController extends ApiController
 	/**
 	 * @param Larasponse $fractal
 	 * @param UserInterface $user
+	 * @param Guard $auth
 	 */
-	public function __construct(Larasponse $fractal, UserInterface $user)
+	public function __construct(Larasponse $fractal, UserInterface $user )
 	{
 		parent::__construct();
 
@@ -41,7 +44,9 @@ class UsersController extends ApiController
 	 */
 	public function index()
 	{
-		$users = $this->user->paginate();
+		$currentUser = Auth::user();
+		$filters = ['company_id' => $currentUser->company_id];
+		$users = $this->user->paginate($filters);
 		return $this->fractal->paginatedCollection($users, new UserTransformer, $this->getResourceKey());
 	}
 
@@ -54,9 +59,14 @@ class UsersController extends ApiController
 	public function show($id)
 	{
 		$user = $this->user->find($id);
+
 		if (!$user) {
 			return $this->respondNotFound();
 		}
+
+		if (Gate::denies('view', $user)) {
+			return $this->respondForbidden();
+		};
 
 		return $this->fractal->collection([$user], new UserTransformer, $this->getResourceKey());
 	}
@@ -69,6 +79,16 @@ class UsersController extends ApiController
 	 */
 	public function store(UserRequest $request)
 	{
+		$currentUser = Auth::user();
+
+		if (Gate::denies('store')) {
+			return $this->respondForbidden();
+		};
+
+		$request->merge([
+			'company_id' => $currentUser->company_id
+		]);
+
 		$user = $this->user->store($request);
 		return $this->fractal->collection([$user], new UserTransformer, $this->getResourceKey());
 	}
@@ -82,7 +102,23 @@ class UsersController extends ApiController
 	 */
 	public function update(UserRequest $request, $id)
 	{
+		$currentUser = Auth::user();
+		$request->merge([
+			'company_id' => $currentUser->company_id
+		]);
+
+		$user = $this->user->find($id);
+
+		if (!$user) {
+			return $this->respondNotFound();
+		}
+
+		if (Gate::denies('update', $user)) {
+			return $this->respondForbidden();
+		};
+
 		$user = $this->user->update($request, $id);
+
 		return $this->fractal->collection([$user], new UserTransformer, $this->getResourceKey());
 	}
 
@@ -94,7 +130,18 @@ class UsersController extends ApiController
 	 */
 	public function destroy($id)
 	{
+		$user = $this->user->find($id);
+
+		if (!$user) {
+			return $this->respondNotFound();
+		}
+
+		if (Gate::denies('delete', $user)) {
+			return $this->respondForbidden();
+		};
+
 		$success = $this->user->destroy($id);
+
 		if (!$success) {
 			return $this->respondNotFound();
 		}
