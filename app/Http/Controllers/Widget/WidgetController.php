@@ -12,6 +12,8 @@ class WidgetController extends Controller
 	public function __construct()
 	{
 		$this->middleware('api.key');
+		$this->middleware('auth.basic.once');
+		$this->middleware('auth');
 	}
 
 	public function setup( CompanyRepository $companyRepository )
