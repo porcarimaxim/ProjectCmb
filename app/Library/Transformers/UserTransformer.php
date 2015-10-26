@@ -12,6 +12,10 @@ class UserTransformer extends TransformerAbstract
 	 */
 	public function transform(User $user)
 	{
+		$options = is_array( $user['options'] ) ? $user['options'] : [] ;
+		if( ! isset( $options['is_available'] ) ) {
+			$options['is_available'] = false;
+		}
 		return [
 			'id' => $user['id'],
 			'company_id' => $user['company_id'],
@@ -20,7 +24,7 @@ class UserTransformer extends TransformerAbstract
 			'email' => $user['email'],
 			'updated_at' => $user['updated_at'],
 			'created_at' => $user['created_at'],
-			'options' => $user['options']
+			'options' => $options
 		];
 	}
 }

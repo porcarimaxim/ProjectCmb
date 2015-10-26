@@ -14,8 +14,7 @@ class UserRepository extends Repository implements UserInterface
 	public function update(Request $request, $id)
 	{
 		$user = parent::update($request, $id);
-
-		$user = $this->setOptions($user, json_decode($request->get('options')));
+		$user = $this->setOptions($user, $request->get('options'));
 
 		return $user;
 	}
