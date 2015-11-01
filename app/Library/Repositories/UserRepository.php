@@ -1,8 +1,10 @@
 <?php namespace App\Library\Repositories;
 
 use App\Http\Requests\Request;
+use App\Jobs\SendFirebase;
 use App\Library\Models\User;
 use App\Library\RepositoriesInterface\UserInterface;
+use Illuminate\Support\Facades\Queue;
 
 class UserRepository extends Repository implements UserInterface
 {
@@ -15,6 +17,8 @@ class UserRepository extends Repository implements UserInterface
 	{
 		$user = parent::update($request, $id);
 		$user = $this->setOptions($user, $request->get('options'));
+
+		Queue::push(new SendFirebase(['model' => $user, 'type' => 'User']));
 
 		return $user;
 	}
@@ -38,5 +42,10 @@ class UserRepository extends Repository implements UserInterface
 			return $user;
 		}
 		return $user;
+	}
+
+	public function getAvailableUsers()
+	{
+		return $this->getModel()->whereRaw("options->>'is_available' = 'true'")->count();
 	}
 }

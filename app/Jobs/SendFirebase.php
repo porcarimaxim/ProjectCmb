@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Jobs\Job;
+use App\Library\RepositoriesInterface\UserInterface;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
@@ -18,7 +18,7 @@ class SendFirebase extends Job implements SelfHandling, ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param array $message
      */
     public function __construct( array $message )
     {
@@ -34,9 +34,9 @@ class SendFirebase extends Job implements SelfHandling, ShouldQueue
     /**
      * Execute the job.
      *
-     * @return void
+     * @param UserInterface $userInterface
      */
-    public function handle()
+    public function handle(UserInterface $userInterface)
     {
         //
         $data = $this->getData();
@@ -44,9 +44,9 @@ class SendFirebase extends Job implements SelfHandling, ShouldQueue
         $type = $data['type'];
 
         switch ($type) {
-            case 'UserStatus':
-                $ref = 'company-' . $model['company_id'] . '/availability/user-' . $model['user_id'] . '/';
-                $val = $model['is_available'];
+            case 'User':
+                $ref = 'company-' . $model['firebase_key'] . '/availabile/';
+                $val = $userInterface->getAvailableUsers();
                 Firebase::set($ref, $val);
                 break;
         }
