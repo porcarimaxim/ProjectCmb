@@ -52,7 +52,6 @@
 	<script src="/frontend/app/modules/calls/directives/filterType/boolean.js"></script>
 	<script src="/frontend/app/modules/calls/directives/filter.js"></script>
 	<script src="/frontend/app/modules/calls/services/calls.js"></script>
-	<script src="/frontend/app/modules/calls/services/status.js"></script>
 	<script src="/frontend/app/modules/calls/services/loader.js"></script>
 
 	<script type="text/javascript">
